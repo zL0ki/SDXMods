@@ -1,0 +1,158 @@
+<configs>
+	<config name="xui">
+		<set xpath="/xui/ruleset/window_group[@name='crafting']">
+			<!-- R.E. LXIX --> <!-- Window that displays Day/Time when compass not available - R.E. LXIX -  Red Eagle LXIX's Custom HUD : v0.19 : A16.1(b1) - Delete this line to remove these items -->
+			<window name="mapTimeHUD"/>  	
+			<window name="windowCraftingList"/>
+			<window name="craftingInfoPanel"/>
+			<window name="windowCraftingQueue"/>
+		</set>
+		<set xpath="/xui/ruleset/window_group[@name='character']">
+			 <window name="mapTimeHUD"/>  	
+			<window name="CharacterFrameWindow"/>
+			<window name="buffInfoPanel"/>
+			<window name="PlayerStatsWindow" />
+			<window name="ActiveBuffsWindow" />
+		</set>
+		<set xpath="/xui/ruleset/window_group[@name='workstation_campfire']">
+			<window name="mapTimeHUD"/>  	
+			<window name="windowCraftingList"/>
+			<window name="craftingInfoPanel"/>
+			<window name="windowCraftingQueue"/>
+			<window name="windowToolsCampfire" />
+			<window name="windowFuel" />
+			<window name="windowOutput" />
+			<window name="windowNonPagingHeader" />
+		</set>
+		<set xpath="/xui/ruleset/window_group[@name='workstation_forge']">
+			<window name="mapTimeHUD"/>  	
+			<window name="windowCraftingList"/>
+			<window name="craftingInfoPanel"/>
+			<window name="windowCraftingQueue"/>
+			<window name="windowToolsForge" />
+			<window name="windowFuel" />
+			<window name="windowForgeInput" />
+			<window name="windowOutput" />
+			<window name="windowNonPagingHeader" />
+		</set>
+		<set xpath="/xui/ruleset/window_group[@name='workstation_cementMixer']">
+			<window name="mapTimeHUD"/>  	
+			<window name="windowCraftingList"/>
+			<window name="craftingInfoPanel"/>
+			<window name="windowCraftingQueue"/>
+			<window name="windowOutput" />
+			<window name="windowNonPagingHeader" />
+		</set>
+		<set xpath="/xui/ruleset/window_group[@name='workstation_workbench']">
+			<window name="mapTimeHUD"/>  	
+			<window name="windowCraftingList"/>
+			<window name="craftingInfoPanel"/>
+			<window name="windowCraftingQueue"/>
+			<window name="windowOutput" />
+			<window name="windowNonPagingHeader" />
+			<window name="windowCombine" />
+		</set>
+		<set xpath="/xui/ruleset/window_group[@name='workstation_chemistryStation']">
+			<window name="mapTimeHUD"/>  	
+			<window name="windowCraftingList"/>
+			<window name="craftingInfoPanel"/>
+			<window name="windowCraftingQueue"/>
+			<window name="windowFuel" />
+			<window name="windowOutput" />
+			<window name="windowNonPagingHeader" />
+		</set>
+		<set xpath="/xui/ruleset/window_group[@name='looting']">
+			<window name="mapTimeHUD"/>  	
+			<window name="windowLooting"/>
+			<window name="windowNonPagingHeader" />
+		</set>
+		<set xpath="/xui/ruleset/window_group[@name='creative']">
+			<window name="mapTimeHUD"/>  	
+			<window name="windowCreative" />
+		</set>
+		<set xpath="/xui/ruleset/window_group[@name='compass']">
+			<window name="windowCompassRELXIX" />
+			<window name="mapStatsHUD" />
+			<window name="playerSkillPointsHUDBar" />
+		</set>
+		<set xpath="/xui/ruleset/window_group[@name='toolbelt']">
+			<window name="windowToolbeltNumbersHUD" />	
+			<window name="playerXPHUD" />	
+			<window name="playerStatsHUD" />	
+ 			<window name="playerZKPKDIcoChngHUD" />
+			<window name="windowToolbelt" anchor="CenterBottom" />
+			<window name="HUDLeftStatBars" anchor="LeftBottom" />
+			<window name="HUDRightStatBars" anchor="RightBottom" />
+			<window name="windowQuestTracker" anchor="RightTop" />
+		</set>
+		<set xpath="/xui/ruleset/window_group[@name='vehicle']">
+			<window name="mapTimeHUD"/>  	
+			<window name="windowVehicle"/>
+			<window name="windowNonPagingHeader" />
+			<window name="windowVehicleStats" />
+			<window name="windowVehicleStorage" />
+		</set>
+		<set xpath="/xui/ruleset/window_group[@name='players']">
+			<window name="mapTimeHUD"/>  	
+			<window name="players" />
+		</set>
+		<set xpath="/xui/ruleset/window_group[@name='assemble']">
+			<window name="mapTimeHUD"/>  	
+			<window name="windowAssemble" />
+			<window name="windowNonPagingHeader" />
+		</set>
+		<set xpath="/xui/ruleset/window_group[@name='skills']">
+			<window name="mapTimeHUD"/>  	
+			<window name="windowSkillList"/>
+			<window name="windowSkillInfo"/>
+			<!-- <window name="windowSkillStats"/> -->
+		</set>
+		<set xpath="/xui/ruleset/window_group[@name='quests']">
+			<window name="mapTimeHUD"/>  	
+			<window name="windowQuestList" />
+			<window name="windowQuestDescription" />
+			<window name="windowQuestObjectives" />
+			<window name="windowQuestRewards" />
+		</set>
+		<set xpath="/xui/ruleset/window_group[@name='journal']">
+			<window name="mapTimeHUD"/>  	
+			<window name="windowJournalList" />
+			<window name="windowJournalEntryDescription" />
+		</set>
+		<set xpath="/xui/ruleset/window_group[@name='trader']">
+			<window name="mapTimeHUD"/>  	
+			<window name="windowTrader"/>
+			<window name="windowNonPagingHeader" />
+			<window name="serviceInfoPanel"/>
+		</set>
+		<set xpath="/xui/ruleset/window_group[@name='powersource']">
+			<window name="mapTimeHUD"/>  	
+			<window name="windowPowerSourceStats" />
+			<window name="windowPowerSourceSlots" />
+			<window name="windowNonPagingHeader" />
+		</set>
+		<set xpath="/xui/ruleset/window_group[@name='powertrigger']">
+			<window name="mapTimeHUD"/>  	
+			<window name="windowPowerTriggerOptions" />
+			<window name="windowPowerCameraControlPreview" />
+			<window name="windowNonPagingHeader" />
+		</set>
+		<set xpath="/xui/ruleset/window_group[@name='powerrangedtrap']">
+			<window name="mapTimeHUD"/>  	
+			<window name="windowPowerRangedTrapOptions" />
+			<window name="windowPowerTrapSlots" />
+			<window name="windowPowerCameraControlPreview" />
+			<window name="windowNonPagingHeader" />
+		</set>
+		<set xpath="/xui/ruleset/window_group[@name='powercamera']">
+			<window name="mapTimeHUD"/>  	
+			<window name="windowPowerCameraControl" />
+			<window name="windowNonPagingHeader" />
+		</set>
+		<set xpath="/xui/ruleset/window_group[@name='powerspotlight']">
+			<window name="mapTimeHUD"/>  	
+			<window name="windowPowerCameraControlPreview" />
+			<window name="windowNonPagingHeader" />
+		</set>
+	</config>
+</configs>

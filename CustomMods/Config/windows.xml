@@ -1,0 +1,461 @@
+<configs>
+	<config name="XUi/windows">
+		<insertBefore xpath="/windows/window[@name='windowCraftingList']">
+			<!-- R.E. LXIX --> <!-- BEGIN_MOD: Red Eagle LXIX's Custom HUD : v0.19 : A16.1(b1) -->
+			<!-- R.E. LXIX --> <!-- Window that replaces the default compass adding the center marker and reformatting the time to match AirTemp/Wind/Elevation window.-->
+			<window name="windowCompassRELXIX" style="compass.window" controller="CompassWindow">
+				<sprite style="compass.window.background.border.mod_RELXIX"/>
+				<sprite style="compass.window.background.mod_RELXIX"/>
+				<sprite style="compass.window.compass.background.mod_RELXIX"/>
+
+				<texture style="compass.window.compass.texture.mod_RELXIX" name="compassTexture" rect_size="0.25,1" rect_offset=".8,0" />
+
+				<!-- Lines below add the center bar to the compass and move the time into the format and position to match rest of display -->
+				<sprite sprite="ui_game_header_fill" depth="10" width="2" height="43" pos="199,0" type="sliced" fillcenter="false" color="255,255,0,35" /> <!-- This adds the center bar to the compass -->
+				<sprite depth="2" name="dayTimeIcon" size="20,20" pos="4,-44" sprite="ui_game_symbol_clock" color="*" foregroundlayer="true"/>
+				<label depth="2" width="172" pos="32,-43" height="22" text="  [DECEA3]{day|always}  {time|always}[-]" font_size="20" /> <!--pivot="center" effect="outline" justify="center"/>-->
+			</window> 
+	
+			<!-- R.E. LXIX --> <!-- Window that displays Air Temp, Wind Speed, Current Elevation -->
+			<window name="mapStatsHUD" width="400" height="32" pos="-200,-49" controller="MapStats" anchor="CenterTop">		
+				<sprite depth="2" name="tempIcon" size="20,20" pos="135,-4" sprite="ui_game_symbol_temperature" color="*" foregroundlayer="true"/>
+				<label depth="2" name="tempLabel" pos="160,-3" width="172" height="22" text=" [DECEA3]{maptemperature}[-]" font_size="20"/>
+				
+				<sprite depth="2" name="windIcon" size="20,20" pos="220,-4" sprite="ui_game_symbol_wind" color="*" foregroundlayer="true"/>
+				<label depth="2" name="windLabel" pos="245,-3" width="172" height="22" text=" [DECEA3]{mapwind} MPH[-]" font_size="20"/>
+				
+				<sprite depth="2" name="elevIcon" size="20,20" pos="315,-4" sprite="ui_game_symbol_climb" color="*" foregroundlayer="true"/>
+				<label depth="2" name="elevLabel" pos="345,-3" width="172" height="22" text=" [DECEA3]{mapelevation} M[-]" font_size="20"/>
+			</window>
+
+			<!-- R.E. LXIX --> <!-- Window that displays the Day/Time when compass not available during various menus -->
+			<window name="mapTimeHUD" width="400" height="32" pos="-490,-20" controller="MapStats" anchor="CenterTop">		
+				<sprite depth="2" name="dayTimeIcon" size="20,20" pos="0,0" sprite="ui_game_symbol_clock" color="*" foregroundlayer="true"/>
+				<label depth="2" name="dayTimeLabel" pos="28,0" width="172" height="22" text="{mapdaytimetitle}: [DECEA3]{mapdaytime}[-]" font_size="20"/>
+			</window>
+	
+			<!-- R.E. LXIX --> <!-- Window that displays Numbers on the tool belt for each slot -->
+			<window name="windowToolbeltNumbersHUD" depth="13" width="603" height="22" pos="-339,84" anchor="CenterBottom" controller="ToolbeltWindow" visible="{toolbeltvisible}">		
+				<label name="slot1" pos="22,0" width="22" height="22" text="  [DECEA3]1" font_size="20" justify="center"/>
+				<label name="slot2" pos="97,0" width="22" height="22" text="  [DECEA3]2" font_size="20" justify="center"/>
+				<label name="slot3" pos="172,0" width="22" height="22" text="  [DECEA3]3" font_size="20" justify="center"/>
+				<label name="slot4" pos="247,0" width="22" height="22" text="  [DECEA3]4" font_size="20" justify="center"/>
+				<label name="slot5" pos="322,0" width="22" height="22" text="  [DECEA3]5" font_size="20" justify="center"/>
+				<label name="slot6" pos="397,0" width="22" height="22" text="  [DECEA3]6" font_size="20" justify="center"/>
+				<label name="slot7" pos="472,0" width="22" height="22" text="  [DECEA3]7" font_size="20" justify="center"/>
+				<label name="slot8" pos="547,0" width="22" height="22" text="  [DECEA3]8" font_size="20" justify="center"/>
+			</window>
+	
+			<!-- R.E. LXIX --> <!-- Window that displays XP bar and level -->
+			<window name="playerXPHUD" width="603" height="24" depth="2" anchor="CenterBottom" pos="-313,116" controller="ToolbeltWindow" visible="{toolbeltvisible}">
+				<rect controller="PlayerStatsWindow">
+					<sprite depth="2" pos="0, -14" width="603" height="10" type="sliced" color="0,0,0,150" />
+					<sprite depth="2" pos="-1, -15" width="601" height="8" type="sliced" color="64,64,64,150" />
+					<sprite depth="2" pos="-1, -15" width="601" height="8" type="filled" color="49,91,203,192" fill="{playerlevelfill}" />
+					<label depth="3" width="40" pos="279,-10" font_size="22" text=" [DECEA3]{playerlevel}[-]" justify="center"/>
+				</rect>
+			</window>
+
+			<!-- R.E. LXIX --> <!-- Window that displays skillpoints available.  Note: does not update real-time only on GUI change events that cause the window to refresh -->
+			<window name="playerSkillPointsHUDBar" width="603" height="24" depth="2" anchor="CenterBottom" pos="-313,106" controller="ToolbeltWindow" visible="{toolbeltvisible}">
+				<rect controller="SkillInfoWindow">
+					<label pos="303, 0" depth="2" width="300" height="22" text="{skillpointsavailable}" font_size="22" color="222,206,163,192" justify="right" />
+					<rect depth="3" width="0" height="0" pos="99999,99999" controller="Paging">
+						<panel pos="0,0" width="0" height="0" disableautobackground="true" visible="{showPaging}">
+							<button depth="4" name="pageDown" style="icon30px, press" pos="0,0" sprite="ui_game_symbol_arrow_left" pivot="center" sound="[paging_click]"/>
+							<button depth="4" name="pageUp" style="icon30px, press" pos="0,0" sprite="ui_game_symbol_arrow_right" pivot="center" sound="[paging_click]"/>
+						</panel>
+					</rect>
+				</rect>
+			</window>
+
+			<!-- R.E. LXIX --> <!-- Window that displays skillpoints available.  Note: does not update real-time only on GUI change events that cause the window to refresh -->
+			<window name="playerSkillPointsHUDRight" width="603" height="24" depth="2" anchor="CenterBottom" pos="-12,106" controller="ToolbeltWindow" visible="{toolbeltvisible}">
+				<rect controller="SkillInfoWindow">
+					<label pos="303, 0" depth="2" width="300" height="22" text="{skillpointsavailable}" font_size="22" color="222,206,163,192" justify="left" />
+					<rect depth="3" width="0" height="0" pos="99999,99999" controller="Paging">
+						<panel pos="0,0" width="0" height="0" disableautobackground="true" visible="{showPaging}">
+							<button depth="4" name="pageDown" style="icon30px, press" pos="0,0" sprite="ui_game_symbol_arrow_left" pivot="center" sound="[paging_click]"/>
+							<button depth="4" name="pageUp" style="icon30px, press" pos="0,0" sprite="ui_game_symbol_arrow_right" pivot="center" sound="[paging_click]"/>
+						</panel>
+					</rect>
+				</rect>
+			</window>
+
+			<!-- R.E. LXIX --> <!-- Window that displays Zombie Kills, and Deaths with static color icon -->
+			<window name="playerZKDHUD" width="400" height="200" anchor="CenterBottom" pos="-350,92" controller="ToolbeltWindow" visible="{toolbeltvisible}">
+				<rect controller="PlayerStatsWindow">
+					<sprite depth="1" pos="3, -13" width="24" height="24" type="sliced" color="0,0,0,100" />
+					<sprite depth="1" pos="4, -14" width="22" height="22" type="sliced" color="64,64,64,100" />
+					<sprite depth="2" name="windowIcon" style="icon22px" pos="4,-14" sprite="ui_game_symbol_zombie"/>
+					<label depth="2" width="200" pos="-201, -16" font_size="20" text=" [DECEA3]{playerzombiekills}[-]" justify="right"/>
+					<sprite depth="1" pos="3, -41" width="24" height="24" type="sliced" color="0,0,0,100" />
+					<sprite depth="1" pos="4, -42" width="22" height="22" type="sliced" color="64,64,64,100" />
+					<sprite depth="2" name="windowIcon" style="icon22px" pos="4,-42" sprite="ui_game_symbol_death"/>
+					<label depth="2" width="200" pos="-201,-44" font_size="20" text=" [DECEA3]{playerdeaths}[-]" justify="right"/>
+				</rect>
+			</window>
+
+			<!-- R.E. LXIX --> <!-- Window that displays Zombie Kills, PKills, and Deaths with static color icon -->
+			<window name="playerZKPKDHUD" width="400" height="200" anchor="CenterBottom" pos="-350,92" controller="ToolbeltWindow" visible="{toolbeltvisible}">
+				<rect controller="PlayerStatsWindow">
+					<sprite depth="1" pos="3, 0" width="24" height="24" type="sliced" color="0,0,0,100" />
+					<sprite depth="1" pos="4, -1" width="22" height="22" type="sliced" color="64,64,64,100" />
+					<sprite depth="2" name="windowIcon" style="icon22px" pos="4,-1" sprite="ui_game_symbol_zombie"/>
+					<label depth="2" width="200" pos="-201, -3" font_size="20" text=" [DECEA3]{playerzombiekills}[-]" justify="right"/>
+					<sprite depth="1" pos="3, -27" width="24" height="24" type="sliced" color="0,0,0,100" />
+					<sprite depth="1" pos="4, -28" width="22" height="22" type="sliced" color="64,64,64,100" />
+					<sprite depth="2" name="windowIcon" style="icon22px" pos="4,-28" sprite="ui_game_symbol_knife"/>
+					<label depth="2" width="200" pos="-201,-30" font_size="20" text=" [DECEA3]{playerpvpkills}[-]" justify="right"/>
+					<sprite depth="1" pos="3, -54" width="24" height="24" type="sliced" color="0,0,0,100" />
+					<sprite depth="1" pos="4, -55" width="22" height="22" type="sliced" color="64,64,64,100" />
+					<sprite depth="2" name="windowIcon" style="icon22px" pos="4,-55" sprite="ui_game_symbol_death"/>
+					<label depth="2" width="200" pos="-201,-57" font_size="20" text=" [DECEA3]{playerdeaths}[-]" justify="right"/>
+				</rect>
+			</window>
+	
+
+			<!-- R.E. LXIX --> <!-- Window that displays Zombie Kills, and Deaths with dynamic color change icon -->
+			<window name="playerZKDIcoChngHUD" width="400" height="200" anchor="CenterBottom" pos="-350,92" controller="ToolbeltWindow" visible="{toolbeltvisible}">
+				<rect controller="PlayerStatsWindow">
+					<sprite depth="1" pos="3, -13" width="24" height="24" type="sliced" color="0,0,0,100" />
+					<sprite depth="1" pos="4, -14" width="22" height="22" type="sliced" color="64,64,64,100" />
+					<sprite depth="2" name="windowIcon" style="icon22px" color="{playerzombiekills},{playerzombiekills},{playerzombiekills}" pos="4,-1" sprite="ui_game_symbol_zombie"/>
+					<label depth="2" width="200" pos="-201, -16" font_size="20" text=" [DECEA3]{playerzombiekills}[-]" justify="right"/>
+					<sprite depth="1" pos="3, -41" width="24" height="24" type="sliced" color="0,0,0,100" />
+					<sprite depth="1" pos="4, -42" width="22" height="22" type="sliced" color="64,64,64,100" />
+					<sprite depth="2" name="windowIcon" style="icon22px" color="{playerdeaths},{playerdeaths},{playerdeaths}" pos="4,-55" sprite="ui_game_symbol_death"/>
+					<label depth="2" width="200" pos="-201,-44" font_size="20" text=" [DECEA3]{playerdeaths}[-]" justify="right"/>
+				</rect>
+			</window>
+
+			<!-- R.E. LXIX --> <!-- Window that displays Zombie Kills, PKills, and Deaths  with dynamic color change icon -->
+			<window name="playerZKPKDIcoChngHUD" width="400" height="200" anchor="CenterBottom" pos="-350,92" controller="ToolbeltWindow" visible="{toolbeltvisible}">
+				<rect controller="PlayerStatsWindow">
+					<sprite depth="1" pos="3, 0" width="24" height="24" type="sliced" color="0,0,0,100" />
+					<sprite depth="1" pos="4, -1" width="22" height="22" type="sliced" color="64,64,64,100" />
+					<sprite depth="2" name="windowIcon" style="icon22px" color="{playerzombiekills},{playerzombiekills},{playerzombiekills}" pos="4,-1" sprite="ui_game_symbol_zombie"/>
+					<label depth="2" width="200" pos="-201, -3" font_size="20" text=" [DECEA3]{playerzombiekills}[-]" justify="right" />
+					<sprite depth="1" pos="3, -27" width="24" height="24" type="sliced" color="0,0,0,100" />
+					<sprite depth="1" pos="4, -28" width="22" height="22" type="sliced" color="64,64,64,100" />
+					<sprite depth="2" name="windowIcon" style="icon22px" color="{playerpvpkills},{playerpvpkills},{playerpvpkills}" pos="4,-28" sprite="ui_game_symbol_knife"/>
+					<label depth="2" width="200" pos="-201,-30" font_size="20" text=" [DECEA3]{playerpvpkills}[-]" justify="right" />
+					<sprite depth="1" pos="3, -54" width="24" height="24" type="sliced" color="0,0,0,100" />
+					<sprite depth="1" pos="4, -55" width="22" height="22" type="sliced" color="64,64,64,100" />
+					<sprite depth="2" name="windowIcon" style="icon22px" color="{playerdeaths},{playerdeaths},{playerdeaths}" pos="4,-55" sprite="ui_game_symbol_death"/>
+					<label depth="2" width="200" pos="-201,-57" font_size="20" text=" [DECEA3]{playerdeaths}[-]" justify="right"/>
+				</rect>
+			</window>
+
+			<!-- R.E. LXIX --> <!-- Window that displays Player Temp, Hunger % and Thirst % -->	
+			<window name="playerStatsHUD" width="400" height="200" pos="178,92" controller="HUDStatBar" visible="{statvisible}" anchor="LeftBottom">
+				<rect controller="PlayerStatsWindow">
+					<sprite depth="1" pos="3, 0" width="105" height="24" type="sliced" color="0,0,0,100" />
+					<sprite depth="1" pos="4, -1" width="103" height="22" type="sliced" color="64,64,64,100" />
+					<sprite depth="2" name="windowIcon" style="icon22px" pos="4,-1" sprite="ui_game_symbol_cold"/>
+					<label depth="2" width="200" pos="26, -3"  font_size="20" text=" [DECEA3]{playercoretemp}[-]" />
+					<sprite depth="2" name="windowIcon" style="icon22px" pos="85,-1" sprite="ui_game_symbol_hot"/>
+					<sprite depth="1" pos="3, -27" width="105" height="24" type="sliced" color="0,0,0,100" />
+					<sprite depth="1" pos="4, -28" width="103" height="22" type="sliced" color="64,64,64,100" />
+					<sprite depth="1" pos="4, -28" width="103" height="22" type="filled" color="52,174,86,192" fill="{playerfoodfill}" />
+					<sprite depth="2" name="windowIcon" style="icon22px" pos="4,-28" sprite="ui_game_symbol_fork"/>
+					<label depth="2" width="200" pos="35,-30" name="lblFood" font_size="20" text=" [DECEA3]{playerfood}%[-]" />
+					<sprite depth="2" name="windowIcon" style="icon22px" pos="85,-28" sprite="ui_game_symbol_hunger"/>
+					<sprite depth="1" pos="3, -54" width="105" height="24" type="sliced" color="0,0,0,100" />
+					<sprite depth="1" pos="4, -55" width="103" height="22" type="sliced" color="64,64,64,100" />
+					<sprite depth="1" pos="4, -55" width="103" height="22" type="filled" color="52,137,167,192" fill="{playerwaterfill}" />
+					<sprite depth="2" name="windowIcon" style="icon22px" pos="4,-55" sprite="ui_game_symbol_water"/>
+					<label depth="2" width="200" pos="35,-57" name="lblWater" font_size="20" text=" [DECEA3]{playerwater}%[-]" />
+					<sprite depth="2" name="windowIcon" style="icon22px" pos="85,-55" sprite="ui_game_symbol_thirst"/>
+				</rect>
+			</window>
+			<!-- R.E. LXIX --> <!-- END_MOD: Red Eagle LXIX's Custom HUD : v0.19 : A16.1(b1) -->
+		</insertBefore>
+	</config>
+	<!-- Changing pos values etc -->
+	<config name="XUi/windows"> <!--windowCraftingList-->
+		<insertAfter xpath="//window[@name='windowCraftingList']/panel[@name='header']">
+			<panel name="header" height="43" depth="1" backgroundspritename="ui_game_panel_header" pos="-50,200"> <!--add pos='-50,200' to node element-->
+				<sprite pos="4,-5" depth="2" name="windowIcon" style="icon32px" sprite="Craft_Icon_Basics"/>
+				<label style="header.name" text="basics" text_key="xuiBasics" />
+				<label pos="387, -6" depth="2" name="unlockedCount" width="64" height="32" text="0/65" font_size="32" color="[lightGrey]" justify="right" pivot="topright"/>
+				<sprite pos="328, -5" depth="2" name="unlockedIcon" style="icon32px" sprite="ui_game_symbol_book" color="[lightGrey]" pivot="topright"/>
+			</panel>
+		</insertAfter>
+		<remove xpath="//window[@name='windowCraftingList']/panel[@name='header'][1]"/>
+		<set xpath="/windows/window[@name='windowCraftingList']/panel[@name='content']/@pos">-50,157</set>
+	</config>
+	<config name="XUi/windows"> <!--windowCraftingQueue-->
+		<set xpath="//window[@name='windowCraftingQueue']/rect/@pos">46,200</set>
+	</config>
+	<config name="XUi/windows"> <!--windowLooting-->
+		<insertAfter xpath="//window[@name='windowLooting']/panel[@name='header']">
+			<panel name="header" height="43" depth="0" disableautobackground="true" pos="-50,290">
+				<sprite depth="1" name="headerbackground" sprite="ui_game_panel_header" />
+				<button depth="3" name="btnSort" style="icon32px, press, hover" pivot="center" pos="21,-21" sprite="ui_game_symbol_loot_sack" tooltip_key="lblSortContainer" sound="[paging_click]" />
+				<label depth="2" name="lootName" pos="39,-6" width="172" height="32" text="LOOT" text_key="xuiLoot" font_size="32" />
+				<label depth="2" name="takeAllLabel" width="32" height="30" font_size="30" color="[mediumGrey]" justify="left" pos="260,-8" />
+				<sprite depth="2" name="takeAllIcon" style="icon32px" sprite="ui_game_symbol_hand" color="[mediumGrey]" pos="220, -4" />
+			</panel>
+		</insertAfter>
+		<remove xpath="//window[@name='windowLooting']/panel[@name='header'][1]"/>
+		<set xpath="/windows/window[@name='windowLooting']/sprite/@pos">-50,290</set>
+		<set xpath="/windows/window[@name='windowLooting']/rect/@pos">-47,241</set>
+		<set xpath="/windows/window[@name='windowLooting']/rect/grid/@rows">12</set>
+		<set xpath="/windows/window[@name='windowLooting']/rect/grid/@cols">20</set>
+	</config>
+	<config name="XUi/windows"> <!--windowCreative-->
+		<insertAfter xpath="//window[@name='windowCreative']/panel[@name='header']">
+			<panel name="header" height="43" depth="0" disableautobackground="true" pos="-50,200">
+			<sprite depth="1" name="headerbackground" sprite="ui_game_panel_header" />
+			<sprite depth="2" name="windowicon" style="icon32px" pos="4,-5" sprite="ui_game_symbol_lightbulb" />
+			<label style="header.name" text="CREATIVE" text_key="xuiCreative" />
+			<label depth="2" name="resultCount" width="100" height="32" text="" color="[lightGrey]" font_size="32" justify="right" anchor_side="right" pivot="right" anchor_run_once="false" anchor_offset="-10,0" />
+		</panel>
+		</insertAfter>
+		<remove xpath="//window[@name='windowCreative']/panel[@name='header'][1]"/>
+		<set xpath="/windows/window[@name='windowCreative']/sprite/@pos">-48,151</set>
+		<set xpath="/windows/window[@name='windowCreative']/rect/@pos">-47,151</set>
+		<set xpath="/windows/window[@name='windowCreative']/sprite[@name='backgroundMain']/@pos">-50,103</set>
+		<set xpath="/windows/window[@name='windowCreative']/grid/@pos">-47,103</set>
+	</config>
+	<config name="XUi/windows"> <!--craftingInfoPanel-->
+		<insertAfter xpath="//window[@name='craftingInfoPanel']/panel[@name='header']">
+			<panel name="header" height="43" depth="1" backgroundspritename="ui_game_panel_header" pos="-50,200">
+				<sprite depth="2" name="windowIcon" style="icon32px" pos="4,-5" sprite="{itemgroupicon}" />
+				<label style="header.name" text="{itemname}" />
+				<rect pos="350,0" name="requiredToolOverlay">
+					<sprite size="24,24" depth="2" name="requiredToolCheckmark" pos="0,-8" sprite="ui_game_symbol_check" color="[red]" />
+					<label depth="2" pos="35,-8" name="requiredToolText" width="200" height="32" text="Required" text_key="xuiRequired" font_size="32" upper_case="true" justify="left" />
+				</rect>
+			</panel>
+		</insertAfter>
+		<remove xpath="//window[@name='craftingInfoPanel']/panel[@name='header'][1]"/>
+		<set xpath="/windows/window[@name='craftingInfoPanel']/rect/@pos">-50,154</set>
+	</config>
+	<config name="XUi/windows"> <!--emptyInfoPanel-->
+		<insertAfter xpath="//window[@name='emptyInfoPanel']/panel[@name='header']">
+			<panel name="header" height="43" depth="1" backgroundspritename="ui_game_panel_header" pos="-50,200">
+				<sprite depth="2" name="windowIcon" style="icon32px" pos="4,-5" sprite="ui_game_symbol_search" />
+				<label style="header.name" text="INSPECT" text_key="xuiInspect" />
+			</panel>
+		</insertAfter>
+		<remove xpath="//window[@name='emptyInfoPanel']/panel[@name='header'][1]"/>
+		<set xpath="/windows/window[@name='emptyInfoPanel']/rect/@pos">-50,154</set>
+	</config>
+	<config name="XUi/windows"> <!--itemInfoPanel-->
+		<insertAfter xpath="//window[@name='itemInfoPanel']/panel[@name='header']">
+			<panel name="header" height="43" depth="1" backgroundspritename="ui_game_panel_header" pos="-50,200">
+				<sprite depth="2" name="windowIcon" style="icon32px" pos="4,-5" sprite="{itemgroupicon}" />
+				<label depth="2" name="windowName" pos="39,-6" width="500" height="32" text="{itemname}" font_size="32" />
+				<label depth="2" pos="350,-8" width="225" height="28" text="{pricelabel} {itemcost}{markup}" color="[lightGrey]" justify="right" />
+				<sprite depth="4" name="costIcon" sprite="ui_game_symbol_coin" size="24,24" pos="577,-10" color="[white]" foregroundlayer="true" />
+			</panel>
+		</insertAfter>
+		<remove xpath="//window[@name='itemInfoPanel']/panel[@name='header'][1]"/>
+		<set xpath="/windows/window[@name='itemInfoPanel']/rect[@name='contentInfo']/@pos">-50,154</set>
+	</config>
+	<config name="XUi/windows"> <!--windowBackpack-->
+		<insertAfter xpath="//window[@name='windowBackpack']/panel[@name='header']">
+			<panel name="header" height="43" depth="1" backgroundspritename="ui_game_panel_header" pos="-50,200">
+				<button depth="3" name="btnSort" style="icon32px, press, hover" pivot="center" pos="21,-21" sprite="ui_game_symbol_backpack" tooltip_key="lblSortInventory" sound="[paging_click]" />
+				<label depth="3" name="windowName" pos="42,-6" width="250" height="32" text="INVENTORY" text_key="xuiInventory" font_size="32" />
+				<label depth="2" pos="472,-8" width="100" height="28" text="{currencyamount}" color="[mediumGrey]" justify="right" />
+				<sprite depth="4" name="costIcon" sprite="ui_game_symbol_coin" size="24,24" pos="577,-10" color="[white]" foregroundlayer="true" />
+			</panel>
+		</insertAfter>
+		<remove xpath="//window[@name='windowBackpack']/panel[@name='header'][1]"/>
+		<set xpath="/windows/window[@name='windowBackpack']/panel[@name='content']/@height">753</set>
+		<set xpath="/windows/window[@name='windowBackpack']/panel[@name='content']/@pos">-50,154</set>
+	</config>
+	<config name="XUi/windows"> <!--windowToolsForge-->
+		<insertAfter xpath="//window[@name='windowToolsForge']/panel[@style='header.panel']">
+			<panel style="header.panel" pos="-50,200">
+				<sprite style="header.icon" sprite="ui_game_symbol_wrench" />
+				<label style="header.name" text="TOOLS" text_key="xuiTools" />
+			</panel>
+		</insertAfter>
+		<remove xpath="//window[@name='windowToolsForge']/panel[@style='header.panel'][1]"/>
+		<set xpath="/windows/window[@name='windowToolsForge']/rect[@name='content']/@pos">-50,154</set>
+	</config>
+	<config name="XUi/windows"> <!--windowToolsCampfire-->
+		<insertAfter xpath="//window[@name='windowToolsCampfire']/panel[@style='header.panel']">
+			<panel style="header.panel" pos="-50,200">
+				<sprite style="header.icon" sprite="ui_game_symbol_cookware" />
+				<label style="header.name" text="TOOLS" text_key="xuiTools" />
+			</panel>
+		</insertAfter>
+		<remove xpath="//window[@name='windowToolsCampfire']/panel[@style='header.panel'][1]"/>
+		<set xpath="/windows/window[@name='windowToolsCampfire']/rect[@name='content']/@pos">-50,154</set>
+	</config>
+	<config name="XUi/windows"> <!--windowFuel-->
+		<insertAfter xpath="//window[@name='windowFuel']/panel[@style='header.panel']">
+			<panel style="header.panel" pos="-50,200">
+				<sprite style="header.icon" sprite="ui_game_symbol_fire" />
+				<label style="header.name" text="FUEL" text_key="xuiFuel" />
+				<label style="header.timer" />
+			</panel>
+		</insertAfter>
+		<remove xpath="//window[@name='windowFuel']/panel[@style='header.panel'][1]"/>
+		<set xpath="/windows/window[@name='windowFuel']/rect[@name='content']/@pos">-50,154</set>
+		<set xpath="/windows/window[@name='windowFuel']/panel[@name='buttonContent']/@pos">-50,79</set>
+	</config>
+	<config name="XUi/windows"> <!--windowInput-->
+		<insertAfter xpath="//window[@name='windowInput']/panel[@style='header.panel']">
+			<panel style="header.panel" pos="-50,200">
+				<sprite style="header.icon" sprite="ui_game_symbol_campfire" />
+				<label style="header.name" text="INPUT" text_key="xuiInput" />
+			</panel>
+		</insertAfter>
+		<remove xpath="//window[@name='windowInput']/panel[@style='header.panel'][1]"/>
+		<set xpath="/windows/window[@name='windowInput']/rect/@pos">-50,154</set>
+	</config>
+	<config name="XUi/windows"> <!--windowForgeInput-->
+		<insertAfter xpath="//window[@name='windowForgeInput']/panel[@style='header.panel']">
+			<panel style="header.panel" pos="-50,200">
+				<sprite style="header.icon" sprite="ui_game_symbol_forge" />
+				<label style="header.name" text="INPUT" text_key="xuiSmelting" />
+			</panel>
+		</insertAfter>
+		<remove xpath="//window[@name='windowForgeInput']/panel[@style='header.panel'][1]"/>
+		<set xpath="/windows/window[@name='windowForgeInput']/sprite/@pos">-50,154</set>
+		<set xpath="/windows/window[@name='windowForgeInput']/rect[@name='content']/@pos">-50,154</set>
+		<set xpath="/windows/window[@name='windowForgeInput']/rect[@name='content2']/@pos">28,151</set>
+	</config>
+	<config name="XUi/windows"> <!--windowOutput-->
+		<insertAfter xpath="//window[@name='windowOutput']/panel[@style='header.panel']">
+			<panel style="header.panel" pos="-50,200">
+				<sprite style="header.icon" sprite="ui_game_symbol_loot_sack" />
+				<label style="header.name" text="OUTPUT" text_key="xuiOutput" />
+			</panel>
+		</insertAfter>
+		<remove xpath="//window[@name='windowOutput']/panel[@style='header.panel'][1]"/>
+		<set xpath="/windows/window[@name='windowOutput']/rect/@pos">-50,154</set>
+	</config>
+	<config name="XUi/windows"> <!--windowCombine-->
+		<insertAfter xpath="//window[@name='windowCombine']/panel[@style='header.panel']">
+			<panel style="header.panel" pos="-50,200">
+				<sprite style="header.icon" sprite="ui_game_symbol_add" />
+				<label style="header.name" text="COMBINE" text_key="xuiCombine" />
+			</panel>
+		</insertAfter>
+		<remove xpath="//window[@name='windowCombine']/panel[@style='header.panel'][1]"/>
+		<set xpath="/windows/window[@name='windowCombine']/rect/@pos">-50,154</set>
+	</config>
+	<config name="XUi/windows"> <!--CharacterFrameWindow-->
+		<insertAfter xpath="//window[@name='CharacterFrameWindow']/panel[@name='header']">
+			<panel name="header" height="43" depth="1" backgroundspritename="ui_game_panel_header" pos="-50,200">
+				<sprite depth="2" name="windowIcon" style="icon32px" pos="5,-5" sprite="ui_game_symbol_character" />
+				<label depth="2" name="characterName" pos="42,-6" width="150" height="32" text="" font_size="32" />
+				<sprite depth="2" name="windowIcon" width="26" height="26" pos="200,-8" sprite="ui_game_symbol_trophy" color="[mediumGrey]" />
+				<label depth="2" name="levelNumber" pos="240,-10" width="80" height="28" text="" color="[lightGrey]" />
+			</panel>
+		</insertAfter>
+		<remove xpath="//window[@name='CharacterFrameWindow']/panel[@name='header'][1]"/>
+		<set xpath="/windows/window[@name='CharacterFrameWindow']/panel[@name='previewFrame']/@pos">-50,154</set>
+		<set xpath="/windows/window[@name='CharacterFrameWindow']/panel[@name='equipment']/@pos">206,151</set>
+	</config>
+	<config name="XUi/windows"> <!--PlayerStatsWindow-->
+		<insertAfter xpath="//window[@name='PlayerStatsWindow']/panel[@name='header']">
+			<panel name="header" height="43" depth="1" backgroundspritename="ui_game_panel_header" pos="-50,200">
+				<sprite depth="2" name="windowIcon" style="icon32px" pos="5,-5" sprite="ui_game_symbol_muscle" />
+				<label depth="2" name="characterName" pos="42,-6" width="230" height="32" text="PLAYER STATS" text_key="xuiPlayerStats" font_size="32" />
+			</panel>
+		</insertAfter>
+		<remove xpath="//window[@name='PlayerStatsWindow']/panel[@name='header'][1]"/>
+		<set xpath="/windows/window[@name='PlayerStatsWindow']/rect[@name='content']/@pos">-50,154</set>
+	</config>
+	<config name="XUi/windows"> <!--ActiveBuffsWindow-->
+		<insertAfter xpath="//window[@name='ActiveBuffsWindow']/panel[@name='header']">
+			<panel name="header" height="43" depth="1" backgroundspritename="ui_game_panel_header" pos="-50,200">
+				<sprite depth="2" name="windowIcon" style="icon32px" pos="5,-5" sprite="ui_game_symbol_medical" />
+				<label depth="2" name="characterName" pos="42,-6" width="250" height="32" text="ACTIVE EFFECTS" text_key="xuiActiveEffects" font_size="32" />
+			</panel>
+		</insertAfter>
+		<remove xpath="//window[@name='ActiveBuffsWindow']/panel[@name='header'][1]"/>
+		<set xpath="/windows/window[@name='ActiveBuffsWindow']/panel[@name='content']/@pos">-50,160</set>
+	</config>
+	<config name="XUi/windows"> <!--buffInfoPanel-->
+		<insertAfter xpath="//window[@name='buffInfoPanel']/panel[@name='header']">
+			<panel name="header" height="43" depth="1" backgroundspritename="ui_game_panel_header" pos="-50,200">
+				<sprite depth="2" name="windowIcon" style="icon32px" pos="4,-5" sprite="{bufficon|once}" />
+				<label style="header.name" text="{buffname|once}" />
+			</panel>
+		</insertAfter>
+		<remove xpath="//window[@name='buffInfoPanel']/panel[@name='header'][1]"/>
+		<set xpath="/windows/window[@name='buffInfoPanel']/rect[@name='contentBuffInfo']/@pos">-50,154</set>
+		<set xpath="/windows/window[@name='buffInfoPanel']/rect/rect/grid[2]/@pos">153,-306</set>
+	</config>
+	<config name="XUi/windows"> <!--windowVehicle-->
+		<set xpath="/windows/window[@name='windowVehicle']/panel[@name='header']/@pos">-47,200</set>
+		<set xpath="/windows/window[@name='windowVehicle']/panel[@name='content']/@pos">-50,157</set>
+	</config>
+	<config name="XUi/windows"> <!--windowAssemble-->
+		<set xpath="/windows/window[@name='windowAssemble']/panel[@name='header']/@pos">-47,200</set>
+		<set xpath="/windows/window[@name='windowAssemble']/panel[@name='content']/@pos">-50,157</set>
+	</config>
+	<config name="XUi/windows"> <!--windowTrader-->
+		<insertAfter xpath="//window[@name='windowTrader']/panel[@name='header']">
+			<panel name="header" height="43" depth="1" backgroundspritename="ui_game_panel_header" pos="-50,200">
+				<sprite pos="4,-5" depth="2" name="windowIcon" style="icon32px" sprite="ui_game_symbol_map_trader" />
+				<label style="header.name" size="350,32" />
+				<label depth="2" pos="340,-8" width="300" height="28" text="{restocklabel}: {timeleft}" color="[lightGrey]" justify="right" visible="{showrestock}" />
+				<label pos="600, -6" depth="2" name="availableMoney" width="64" height="32" text="{availablemoney}" font_size="32" color="[lightGrey]" justify="right" pivot="topright" visible="{isowner}" />
+				<sprite pos="638, -5" depth="2" name="coinIcon" style="icon32px" sprite="ui_game_symbol_coin" color="[lightGrey]" pivot="topright" visible="{isowner}" />
+			</panel>
+		</insertAfter>
+		<remove xpath="//window[@name='windowTrader']/panel[@name='header'][1]"/>
+		<set xpath="/windows/window[@name='windowTrader']/panel[@name='content']/@pos">-50,157</set>
+	</config>
+	<config name="XUi/windows">
+		<insertAfter xpath="//window[@name='windowPowerSourceStats']/panel">
+			<panel name="header" height="43" depth="1" backgroundspritename="ui_game_panel_header" pos="-50,200">
+				<sprite depth="2" name="windowIcon" style="icon32px" pos="5,-5" sprite="{powersourceicon}" />
+				<label style="header.name" text="STATS" text_key="xuiStats" />
+			</panel>
+		</insertAfter>
+		<remove xpath="//window[@name='windowPowerSourceStats']/panel[1]"/>
+		<set xpath="/windows/window[@name='windowPowerSourceStats']/rect/@pos">-50,154</set>
+	</config>
+	<config name="XUi/windows">
+		<insertAfter xpath="//window[@name='windowPowerTriggerOptions']/panel">
+			<panel name="header" height="43" depth="1" backgroundspritename="ui_game_panel_header" pos="-50,200">
+				<sprite depth="2" name="windowIcon" style="icon32px" pos="5,-5" sprite="ui_game_symbol_electric_power" />
+				<label style="header.name" text="OPTIONS" text_key="btnOptions" />
+			</panel>
+		</insertAfter>
+		<remove xpath="//window[@name='windowPowerTriggerOptions']/panel[1]"/>
+		<set xpath="/windows/window[@name='windowPowerTriggerOptions']/rect/@pos">-50,154</set>
+	</config>	
+	<config name="XUi/windows">
+		<insertAfter xpath="//window[@name='windowPowerSourceSlots']/panel">
+			<panel style="header.panel" pos="-50,200">
+				<sprite depth="2" name="windowIcon" style="icon32px" pos="5,-5" sprite="ui_game_symbol_electric_power" />
+				<label style="header.name" text="SLOTS" text_key="xuiSlots" />
+			</panel>
+		</insertAfter>
+		<remove xpath="//window[@name='windowPowerSourceSlots']/panel[1]"/>
+		<set xpath="/windows/window[@name='windowPowerSourceSlots']/rect/@pos">-50,154</set>
+	</config>
+	<config name="XUi/windows">
+		<insertAfter xpath="//window[@name='windowPowerTrapSlots']/panel">
+			<panel style="header.panel" pos="-50,200">
+				<sprite depth="2" name="windowIcon" style="icon32px" pos="5,-5" sprite="ui_game_symbol_electric_power" />
+				<label style="header.name" text="AMMO" text_key="xuiAmmo" />
+			</panel>
+		</insertAfter>
+		<remove xpath="//window[@name='windowPowerTrapSlots']/panel[1]"/>
+		<set xpath="/windows/window[@name='windowPowerTrapSlots']/rect[@name='content']/@pos">-50,154</set>
+		<set xpath="/windows/window[@name='windowPowerTrapSlots']/rect[@name='btnOn']/@pos">-50, 78</set>
+	</config>
+	<config name="XUi/windows">
+		<insertAfter xpath="//window[@name='windowPowerRangedTrapOptions']/panel">
+			<panel name="header" height="43" depth="1" backgroundspritename="ui_game_panel_header" pos="-50,200">
+				<sprite depth="2" name="windowIcon" style="icon32px" pos="5,-5" sprite="ui_game_symbol_electric_power" />
+				<label style="header.name" text="TARGETING" text_key="xuiTargeting" />
+			</panel>
+		</insertAfter>
+		<remove xpath="//window[@name='windowPowerRangedTrapOptions']/panel[1]"/>
+		<set xpath="/windows/window[@name='windowPowerRangedTrapOptions']/rect/@pos">-50,154</set>
+	</config>
+</configs>

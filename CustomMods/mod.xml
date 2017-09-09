@@ -1,0 +1,18 @@
+<mod>
+	<info>
+		<author>zLoki</author>
+		<name>CustomMods</name>
+		<description>Integrating Red Eagle LXIX UIHUD mod. Please note this is not my mod I just use it. Props to RED Eagle LXIX for his awesome work.</description>
+		<mod_version>v1.0.0</mod_version>
+		<game_version>16.3</game_version>
+		<launcher_version>SDX7</launcher_version>
+	</info>
+	
+	<help>Help/index.html</help>
+	<config_mods>
+		<import file="Configs\xui.xml" />
+		<import file="Configs\windows.xml" />
+		<import file="Configs\controls.xml" />
+		<import file="Configs\styles.xml" />
+	</config_mods>
+</mod>
